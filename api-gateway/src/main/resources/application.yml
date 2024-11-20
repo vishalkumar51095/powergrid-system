@@ -1,0 +1,37 @@
+
+server:
+  port: 8081
+
+spring: 
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: SENSOR-DATA-SERVICE
+          uri: lb://SENSOR-DATA-SERVICE
+          predicates:
+            - Path=/sensor-data/**
+            
+        - id: LOAD-FORECASTING-SERVICE
+          uri: lb://LOAD-FORECASTING-SERVICE
+          predicates:
+            - Path=/load-forecast/**
+            
+        - id: REAL-TIME-MONITORING-SERVICE
+          uri: lb://REAL-TIME-MONITORING-SERVICE
+          predicates:
+            - Path=//monitor/**
+      
+        
+            
+       
+                
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+
+
